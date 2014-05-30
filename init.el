@@ -221,7 +221,7 @@ it only includes basic header information"
 ;;--------------------------------------------------------------------------
 ;; dirtree (equivalent of NERDTree in Vim)
 ;;--------------------------------------------------------------------------
-(add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d/emacs-dirtree-master")
 (require 'dirtree)
 
 ;;--------------------------------------------------------------------------
