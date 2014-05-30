@@ -265,7 +265,7 @@ it only includes basic header information"
 ;;---------------------------------------------------------------------------
 ;; function-args and CEDET
 ;;---------------------------------------------------------------------------
-(add-to-list 'load-path "~/.emacs.d/function-args")
+(add-to-list 'load-path "~/.emacs.d/function-arg")
 (require 'function-args)
 (fa-config-default)
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
