@@ -11,7 +11,7 @@
   (insert "/*! -------------------------------------------------------------- \n"
           " * \@brief \n"
           " *\n"
-          " * \@author: " name " (" email_address ")\n"
+          " * \@author: " name " <" email_address ">\n"
           " * \@date " (format-time-string "%m/%d/%Y") "\n"
           " * ---------------------------------------------------------------- \n"
 	  " */\n")
@@ -69,6 +69,8 @@ it only includes basic header information"
   (insert "#ifndef _" (upcase basename) "_" (upcase extension) "_\n"
           "#define _" (upcase basename) "_" (upcase extension) "_\n\n"
           "/** -------------------------------------------------------------- \n"
+	  " * Copyright 2014 < Ammar Husain (Carnegie Mellon University) > "
+	  " * \n"
           " * \@file   " (file-name-nondirectory (buffer-file-name)) "\n"
           " * \n"
           " * \@author " name " <" email_address ">\n"
@@ -87,6 +89,8 @@ it only includes basic header information"
 (defun dg-insert-cpp-file-header (basename)
   (interactive)
   (insert "/*! -------------------------------------------------------------- \n"
+	  " * Copyright 2014 < Ammar Husain (Carnegie Mellon University) > "
+	  " * \n"
           " * \@file   " (file-name-nondirectory (buffer-file-name)) "\n"
           " *\n"
           " * \@author " name " (" email_address ")\n"
@@ -98,7 +102,13 @@ it only includes basic header information"
 ;; insert a nice code separation block
 (defun dg-insert-code-separation ()
   (interactive)
-  (insert "/// ---------------------------------------------------------------------- \n")
+  (insert "/// ------------------------------------------------------- ///\n")
+  )
+
+;; insert a nice code separation block
+(defun dg-insert-code-separation-asterisk ()
+  (interactive)
+  (insert "/* --------------------------------------------------------- */ \n")
   )
 
 ;; insert the author tag with name
@@ -184,7 +194,7 @@ it only includes basic header information"
 (add-hook 'c-mode-hook
           (lambda ()
             (c-toggle-auto-hungry-state 1)
-            (c-set-style "ellemtel")
+            ;(c-set-style "ellemtel")
             (setq c-basic-offset 4)
             (define-key c-mode-map "\C-m" 'reindent-then-newline-and-indent)
             (define-key c++-mode-map "\C-c\C-v" 'dg-insert-code-separation)
@@ -201,14 +211,15 @@ it only includes basic header information"
           (lambda ()
             ;;(add-qt-customizations)
             (c-toggle-auto-hungry-state 1)
-            (c-set-style "ellemtel")
+            ;(c-set-style "ellemtel")
 	    (vlad-cc-style)
 	    ;;(setq indent-line-function 'insert-tab)
             (define-key c++-mode-map "\C-m" 'reindent-then-newline-and-indent)
-            (define-key c++-mode-map "\C-c\C-d" 'dg-insert-file-header)
+            (define-key c++-mode-map "\C-c\C-q" 'dg-insert-file-header)
             (define-key c++-mode-map "\C-c\C-f" 'dg-insert-function-header)
             (define-key c++-mode-map "\C-c\C-l" 'dg-insert-class-header)
-            (define-key c++-mode-map "\C-c\C-v" 'dg-insert-code-separation)
+            (define-key c++-mode-map "\C-c\C-v" 'dg-insert-code-separation-asterisk)
+            (define-key c++-mode-map "\C-c\C-b" 'dg-insert-code-separation)
             (define-key c++-mode-map "\C-c\C-c" 'dg-insert-comment)
             (define-key c++-mode-map "\C-c\C-i" 'dg-insert-include)
             (define-key c++-mode-map "\C-c\C-h" 'dg-insert-hack-comment)
@@ -283,3 +294,86 @@ it only includes basic header information"
       (doxymacs-font-lock)))
 
 (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
+
+
+;; set the theme to tango dark
+(load-theme 'tango-dark)
+
+
+;;;;;;; youtube: b yuskel tutorials ;;;;;;; 
+
+; start package.el with emacs
+(require 'package)
+; add MELPA to repository list
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+; initialize package.el
+(package-initialize)
+; start auto-complete with emacs
+(require 'auto-complete)
+; do default config for auto-complete
+(require 'auto-complete-config)
+(ac-config-default)
+
+
+; start yasnippet with emacs
+(require 'yasnippet)
+(yas-global-mode 1)
+
+
+; let's define a function which initializes auto-complete-c-headers and gets called for c/c++ hooks
+(defun my:ac-c-header-init ()
+  (require 'auto-complete-c-headers)
+  (add-to-list 'ac-sources 'ac-source-c-headers)
+)
+; now let's call this function from c/c++ hooks
+(add-hook 'c++-mode-hook 'my:ac-c-header-init)
+(add-hook 'c-mode-hook 'my:ac-c-header-init)
+
+; Fix iedit bug
+; modify several instances of a variable name simultaneously
+(define-key global-map (kbd "C-c ;") 'iedit-mode)
+
+
+; install: sudo pip install cpplint
+; start flymake-google-cpplint-load
+; let's define a function for flymake initialization
+(defun my:flymake-google-init () 
+  (require 'flymake-google-cpplint)
+  (custom-set-variables
+   '(flymake-google-cpplint-command "/usr/local/bin/cpplint"))
+  (flymake-google-cpplint-load)
+)
+(add-hook 'c-mode-hook 'my:flymake-google-init)
+(add-hook 'c++-mode-hook 'my:flymake-google-init)
+
+
+; start google-c-style with emacs
+(require 'google-c-style)
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+
+; turn on Semantic
+(semantic-mode 1)
+; let's define a function which adds semantic as a suggestion backend to auto complete
+; and hook this function to c-mode-common-hook
+(defun my:add-semantic-to-autocomplete() 
+  (add-to-list 'ac-sources 'ac-source-semantic)
+)
+(add-hook 'c-mode-common-hook 'my:add-semantic-to-autocomplete)
+
+; turn on ede mode 
+(global-ede-mode 1)
+
+; you can use system-include-path for setting up the system header file locations.
+; turn on automatic reparsing of open buffers in semantic
+(global-semantic-idle-scheduler-mode 1)
+
+
+;;;;;;; Features customized ;;;;;;;;;
+;; macros for comments, file comment header etc.
+;; doxymacs support
+;; emacs dirtree
+;; Google C+++ style guide support
+;; autocomplete
+;; yasnippet
+;; CEDET: (only the includes with <> do not get parsed- need to add specific projects to get that to work
