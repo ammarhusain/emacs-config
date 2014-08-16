@@ -22,7 +22,7 @@
 (defun dg-insert-class-header (class-name)
   "Prompts for the name of a new class, then writes suitable Doxygen markup
 for the class documentation and inserts lines for the ctor/dtor pair."
-  (interactive "sClass Name: ")
+  (interactive "Class Name: ")
   (insert "/** -------------------------------------------------------------- \n"
           " * \@class  " class-name "\n"
           " * \n"
@@ -62,6 +62,34 @@ it only includes basic header information"
           (string= extension "c")
           (string= extension "c++"))
       (dg-insert-cpp-file-header basename)))))
+
+;; checks if the file is a c++ header (.h or .hpp)
+(defun dg-insert-guards ()
+  "Checks the buffer name to get the filename; If extension is {h,hpp}, inserts include guards.  If extension is {c,cpp,cc}, it does nothing"
+  (interactive)
+  (let* ((filename (buffer-name))
+         (basename (file-name-sans-extension filename))
+         (extension (file-name-extension filename)))
+    (goto-char (point-min))
+    (cond
+     ((or (string= extension "h")
+          (string= extension "hpp"))
+      (dg-insert-header-file-guards basename extension))
+)))
+
+;; insert a guards in the header file
+(defun dg-insert-header-file-guards (basename extension)
+  (interactive)
+  (goto-char (point-min))
+  (insert "#ifndef _" (upcase basename) "_" (upcase extension) "_\n"
+          "#define _" (upcase basename) "_" (upcase extension) "_\n\n"
+  (goto-char (point-max))
+  (move-beginning-of-line nil)
+  (insert "\n#endif\n")
+  (move-beginning-of-line -1))
+)
+
+
 
 ;; insert a nice doxygen file documentation block and preprocessor template
 (defun dg-insert-header-file-header (basename extension)
@@ -198,11 +226,12 @@ it only includes basic header information"
             (setq c-basic-offset 4)
             (define-key c-mode-map "\C-m" 'reindent-then-newline-and-indent)
             (define-key c++-mode-map "\C-c\C-v" 'dg-insert-code-separation)
-            (define-key c++-mode-map "\C-c\C-c" 'dg-insert-comment)
+            ;;(define-key c++-mode-map "\C-c\C-c" 'dg-insert-comment)
             (define-key c++-mode-map "\C-c\C-i" 'dg-insert-include)
             (define-key c++-mode-map "\C-c\C-h" 'dg-insert-hack-comment)
             (define-key c++-mode-map "\C-c\C-t" 'dg-insert-todo-comment)
             (define-key c++-mode-map "\C-c\C-a" 'dg-insert-author-tag)
+            (define-key c++-mode-map "\C-c\C-g" 'dg-insert-guards)
 	    )
 )
 
@@ -215,16 +244,17 @@ it only includes basic header information"
 	    (vlad-cc-style)
 	    ;;(setq indent-line-function 'insert-tab)
             (define-key c++-mode-map "\C-m" 'reindent-then-newline-and-indent)
-            (define-key c++-mode-map "\C-c\C-q" 'dg-insert-file-header)
-            (define-key c++-mode-map "\C-c\C-f" 'dg-insert-function-header)
+            ;;(define-key c++-mode-map "\C-c\C-q" 'dg-insert-file-header)
+            ;;(define-key c++-mode-map "\C-c\C-f" 'dg-insert-function-header)
             (define-key c++-mode-map "\C-c\C-l" 'dg-insert-class-header)
             (define-key c++-mode-map "\C-c\C-v" 'dg-insert-code-separation-asterisk)
             (define-key c++-mode-map "\C-c\C-b" 'dg-insert-code-separation)
-            (define-key c++-mode-map "\C-c\C-c" 'dg-insert-comment)
+            ;;(define-key c++-mode-map "\C-c\C-c" 'dg-insert-comment)
             (define-key c++-mode-map "\C-c\C-i" 'dg-insert-include)
             (define-key c++-mode-map "\C-c\C-h" 'dg-insert-hack-comment)
             (define-key c++-mode-map "\C-c\C-t" 'dg-insert-todo-comment)
             (define-key c++-mode-map "\C-c\C-a" 'dg-insert-author-tag)
+            (define-key c++-mode-map "\C-c\C-g" 'dg-insert-guards)
 	    )
 )
 

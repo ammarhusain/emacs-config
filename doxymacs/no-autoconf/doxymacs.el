@@ -287,6 +287,7 @@ file:///home/me/project/bar/doc/ and the XML tags file is at
 
 (defcustom doxymacs-doxygen-style
   "JavaDoc"
+  ;;"C++"
   "The style of comments to insert into code.
 See http://www.stack.nl/~dimitri/doxygen/docblocks.html#docblocks for examples
 of the various styles.
@@ -1129,6 +1130,8 @@ the completion or nil if canceled by the user."
 
 (defconst doxymacs-JavaDoc-file-comment-template
  '("/** ----------------------------------------------------------------------" > n
+   " * Copyright 2014 < Ammar Husain (Carnegie Mellon University) > " > n 
+   " * " > n
    " * " (doxymacs-doxygen-command-char) "file   "
    (if (buffer-file-name)
        (file-name-nondirectory (buffer-file-name))
@@ -1209,6 +1212,8 @@ the completion or nil if canceled by the user."
 	  "/** ----------------------------------------------------------------------" '> 'n
 	  " * " 'p '> 'n
 	  " * " '> 'n
+          " * \@author " name " <" email_address ">" '> 'n
+          " * \@date " (format-time-string "%m/%d/%Y") " " '> 'n
 	  (doxymacs-parm-tempo-element (cdr (assoc 'args next-func)))
 	  (unless (string-match
                    (regexp-quote (cdr (assoc 'return next-func)))
@@ -1248,6 +1253,8 @@ the completion or nil if canceled by the user."
 	  'l
 	  "/// " 'p '> 'n
 	  "///" '> 'n
+          "/// \@author " name " <" email_address ">" '> 'n
+          "/// \@date " (format-time-string "%m/%d/%Y") " " '> 'n
 	  (doxymacs-parm-tempo-element (cdr (assoc 'args next-func)))
 	  (unless (string-match
                    (regexp-quote (cdr (assoc 'return next-func)))
