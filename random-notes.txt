@@ -1,0 +1,4 @@
+1. Make sure clang-format is installed (either through brew or via apt-get)
+2. Make sure the google linter is pointing to the correct executable
+3. Had to change Terminal setting on Mac:
+   Preferences->Profiles->Keyboard .... Enable the "Use Option as Meta key"

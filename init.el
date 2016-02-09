@@ -88,7 +88,7 @@
   (require 'flymake-google-cpplint)
   (custom-set-variables
    '(flymake-google-cpplint-command ;"/usr/local/bin/cpplint"))
-     "/Users/ammarhusain/src/autonomy-repo/autonomy/cmake/lint/google_cpplint.py"))
+     "~/src/autonomy-repo/autonomy/cmake/lint/google_cpplint.py"))
   (flymake-google-cpplint-load)
   )
 
@@ -231,3 +231,6 @@
 
 ;; feature for revert split pane config. Call winner-undo 【Ctrl+c ←】 and winner-redo 【Ctrl+c →】
 (winner-mode 1)
+
+(set-keyboard-coding-system nil)
+(setq x-alt-keysym 'meta)
