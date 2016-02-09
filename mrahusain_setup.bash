@@ -1,0 +1,12 @@
+export EDITOR=emacs
+alias e="emacs"
+alias e2="emacs -nw"
+alias end="emacs --no-desktop"
+alias ga="git add"
+alias gc="git commit"
+alias gs="git status"
+alias gcm="git commit -m"
+alias gcmb="git commit -m \"blah\""
+alias gri="git rebase -i"
+alias gir="grep -ir"
+alias fn="find . -name"
