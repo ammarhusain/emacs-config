@@ -4,7 +4,6 @@
 ; Add the custom directory to pick the custom emacs package configurations
 (add-to-list 'load-path "~/.emacs.d/custom")
 
-
 ;;----------------------------------------------------------------------
 ;; C/C++ programming
 ;;-------------------------------------------------------------------------
@@ -12,9 +11,6 @@
 
 (defvar email_address "ammar_husain@apple.com")
 (defvar name "Ammar Husain")
-
-(add-to-list 'load-path "~/.emacs.d/custom/cl-lib/")
-(require 'cl-lib)
 
 (require 'cc-mode)
 
@@ -78,33 +74,6 @@
 (add-to-list 'load-path "~/.emacs.d/custom/emacs-dirtree-master")
 (require 'dirtree)
 
-;;--------------------------------------------------------------------------
-;; dirtree (equivalent of NERDTree in Vim)
-;;--------------------------------------------------------------------------
-; install: sudo pip install cpplint
-; start flymake-google-cpplint-load
-; let's define a function for flymake initialization
-(defun my:flymake-google-init ()
-  (require 'flymake-google-cpplint)
-  (custom-set-variables
-   '(flymake-google-cpplint-command ;"/usr/local/bin/cpplint"))
-     "~/src/autonomy-repo/autonomy/cmake/lint/google_cpplint.py"))
-  (flymake-google-cpplint-load)
-  )
-
- (add-hook 'c-mode-hook 'my:flymake-google-init)
- (add-hook 'c++-mode-hook 'my:flymake-google-init)
-
-
-;;---------------------------------------------------------------------------
-;; function-args and CEDET
-;;---------------------------------------------------------------------------
-(add-to-list 'load-path "~/.emacs.d/custom/cedet/function-arg")
-(require 'function-args)
-(fa-config-default)
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-(set-default 'semantic-case-fold t)
-
 ;;---------------------------------------------------------------------------
 ;; load Doxymacs
 ;;---------------------------------------------------------------------------
@@ -117,47 +86,37 @@
 
 (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
 
-; start package.el with emacs
-(require 'package)
-; add MELPA to repository list
-(add-to-list 'package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
-				 ("melpa2" . "http://melpa.org/packages/")))
-; initialize package.el
-(package-initialize)
-; start auto-complete with emacs
-(require 'auto-complete)
-; do default config for auto-complete
-(require 'auto-complete-config)
-(ac-config-default)
 
+;; MELPA
+(require 'package) ;; You might already have this line
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize) ;; You might already have this line
 
-; start yasnippet with emacs
-;(require 'yasnippet)
-;(yas-global-mode 1)
+;; start yasnippet with emacs
+(require 'yasnippet)
+(yas-global-mode 1)
 
-
-; let's define a function which initializes auto-complete-c-headers and gets called for c/c++ hooks
-(defun my:ac-c-header-init ()
-  (require 'auto-complete-c-headers)
-  (add-to-list 'ac-sources 'ac-source-c-headers)
-)
-; now let's call this function from c/c++ hooks
-(add-hook 'c++-mode-hook 'my:ac-c-header-init)
-(add-hook 'c-mode-hook 'my:ac-c-header-init)
 
 ; Fix iedit bug
 ; modify several instances of a variable name simultaneously
 (define-key global-map (kbd "C-c ;") 'iedit-mode)
 
+
+(add-to-list 'load-path "~/.emacs.d/custom/cl-lib/")
+(require 'cl-lib)
+
+
 ; Clang formatting
 (require 'clang-format)
-(setq clang-format-executable '"/usr/local/bin/clang-format")
-(global-set-key (kbd "C-M-z") 'clang-format-buffer)
-
-; start google-c-style with emacs
-(require 'google-c-style)
-(add-hook 'c-mode-common-hook 'google-set-c-style)
-(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+;(setq clang-format-executable '"/usr/local/bin/clang-format")
+;(setq clang-format-executable '"/usr/lib/llvm-3.5/bin/clang-format -style='Google'")
+;(global-set-key (kbd "C-M-z") 'clang-format-buffer)
+;(global-set-key (kbd "C-M-z") 'clang-format-region)
+(global-set-key [C-tab] 'clang-format-region)
 
 ;; add useful behaviour to c-mode
 (add-hook 'c-mode-common-hook
@@ -197,15 +156,17 @@
 (load "~/.emacs.d/custom/fireplace/fireplace")
 
 ;; Windowing keys
-(global-set-key [(C-M-left)] 'windmove-left)
-(global-set-key [(C-M-right)] 'windmove-right)
-(global-set-key [(C-M-up)] 'windmove-up)
-(global-set-key [(C-M-down)] 'windmove-down)
+(global-set-key (kbd "\C-q") nil)
+(global-set-key (kbd "\C-qa") 'windmove-left)
+(global-set-key (kbd "\C-qd") 'windmove-right)
+(global-set-key (kbd "\C-qw") 'windmove-up)
+(global-set-key (kbd "\C-qs") 'windmove-down)
 
-;(global-set-key [(C-M-left)] 'shrink-window-horizontally)
-;(global-set-key [(C-M-right)] 'enlarge-window-horizontally)
-;(global-set-key [(C-M-up)] 'enlarge-window)
-;(global-set-key [(C-M-down)] 'shrink-window)
+(global-set-key [(C-M-left)] 'shrink-window-horizontally)
+(global-set-key [(C-M-right)] 'enlarge-window-horizontally)
+(global-set-key [(C-M-up)] 'enlarge-window)
+(global-set-key [(C-M-down)] 'shrink-window)
+
 
 (setq compilation-read-command nil)
 (global-set-key [f9] 'compile)
@@ -226,11 +187,117 @@
 (defun track-mouse (e))
 (setq mouse-sel-mode t)
 
-;; save/restore opened files and windows config
-;(desktop-save-mode 1) ; 0 for off
-
 ;; feature for revert split pane config. Call winner-undo 【Ctrl+c ←】 and winner-redo 【Ctrl+c →】
 (winner-mode 1)
 
 (set-keyboard-coding-system nil)
 (setq x-alt-keysym 'meta)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(compile-command "cmake -DCMAKE_BUILD_TYPE=Debug ..; make -j ")
+ '(flymake-google-cpplint-command "~/src/autonomy-repo/autonomy/cmake/lint/google_cpplint.py")
+ '(package-selected-packages
+   (quote
+    (flycheck-rtags flycheck-package flycheck-irony company-irony-c-headers company-irony irony cmake-ide rtags yasnippet ivy iedit google-c-style ggtags flymake-google-cpplint flymake-cursor auto-complete-c-headers))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(defun show-file-name ()
+  "Show the full path file name in the minibuffer."
+  (interactive)
+  (message (buffer-file-name)))
+
+(global-set-key (kbd "\C-f") nil)
+(global-set-key (kbd "\C-f1") 'show-file-name)
+
+
+ (ivy-mode 1)
+;; (setq ivy-use-virtual-buffers t)
+;; (setq enable-recursive-minibuffers t)
+ (global-set-key "\C-s" 'swiper)
+;; (global-set-key (kbd "C-c C-r") 'ivy-resume)
+;; (global-set-key (kbd "<f6>") 'ivy-resume)
+ (global-set-key (kbd "M-x") 'counsel-M-x)
+ (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+;; (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+;; (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+;; (global-set-key (kbd "<f1> l") 'counsel-find-library)
+;; (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+;; (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+;; (global-set-key (kbd "C-c g") 'counsel-git)
+;; (global-set-key (kbd "C-c j") 'counsel-git-grep)
+;; (global-set-key (kbd "C-c k") 'counsel-ag)
+;; (global-set-key (kbd "C-x l") 'counsel-locate)
+;; (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+;; (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+
+
+
+
+;; Rtags, cmake-ide
+(require 'rtags)
+(require 'company-rtags)
+
+(setq rtags-completions-enabled t)
+(eval-after-load 'company
+  '(add-to-list
+    'company-backends 'company-rtags))
+(setq rtags-autostart-diagnostics t)
+(rtags-enable-standard-keybindings)
+
+(require 'helm-rtags)
+(setq rtags-use-helm t)
+
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+(setq company-backends (delete 'company-semantic company-backends))
+
+(require 'company-irony-c-headers)
+(eval-after-load 'company
+  '(add-to-list
+    'company-backends '(company-irony-c-headers company-irony)))
+
+(setq company-idle-delay 0)
+(define-key c-mode-map [(tab)] 'company-complete)
+(define-key c++-mode-map [(tab)] 'company-complete)
+(add-hook 'after-init-hook 'global-company-mode)
+
+(add-hook 'c++-mode-hook 'flycheck-mode)
+(add-hook 'c-mode-hook 'flycheck-mode)
+
+(require 'flycheck-rtags)
+
+(defun my-flycheck-rtags-setup ()
+  (flycheck-select-checker 'rtags)
+  (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
+  (setq-local flycheck-check-syntax-automatically nil))
+;; c-mode-common-hook is also called by c++-mode
+(add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
+
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
+(cmake-ide-setup)
+
+;; http://syamajala.github.io/c-ide.html
+;; http://diobla.info/doc/rtags#sec-4-2
+;; http://nilsdeppe.com/posts/emacs-c++-ide

@@ -8,8 +8,6 @@ if [ -f ~/.git-completion.bash ]; then
     . ~/.git-completion.bash
 fi
 
-# set git editor to emacs
-export EDITOR=emacs
 
 # set your aliases
 alias e="emacs"
@@ -23,3 +21,8 @@ alias gcmb="git commit -m \"blah\""
 alias gri="git rebase -i"
 alias gir="grep -ir"
 alias fn="find . -name"
+
+# set git editor to emacs
+export EDITOR="emacs -nw"
+
+export LIBCLANG_ROOT_DIR="/usr/local/opt/llvm"
