@@ -120,8 +120,8 @@
 ; start package.el with emacs
 (require 'package)
 ; add MELPA to repository list
-(add-to-list 'package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
-				 ("melpa2" . "http://melpa.org/packages/")))
+;(add-to-list 'package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
+;				 ("melpa2" . "http://melpa.org/packages/")))
 ; initialize package.el
 (package-initialize)
 ; start auto-complete with emacs
@@ -132,8 +132,8 @@
 
 
 ; start yasnippet with emacs
-;(require 'yasnippet)
-;(yas-global-mode 1)
+(require 'yasnippet)
+(yas-global-mode 1)
 
 
 ; let's define a function which initializes auto-complete-c-headers and gets called for c/c++ hooks
@@ -151,13 +151,16 @@
 
 ; Clang formatting
 (require 'clang-format)
-(setq clang-format-executable '"/usr/local/bin/clang-format")
-(global-set-key (kbd "C-M-z") 'clang-format-buffer)
+;(setq clang-format-executable '"/usr/local/bin/clang-format")
+;(setq clang-format-executable '"/usr/lib/llvm-3.5/bin/clang-format -style='Google'")
+;(global-set-key (kbd "C-M-z") 'clang-format-buffer)
+;(global-set-key (kbd "C-M-z") 'clang-format-region)
+(global-set-key [C-tab] 'clang-format-region)
 
 ; start google-c-style with emacs
-(require 'google-c-style)
-(add-hook 'c-mode-common-hook 'google-set-c-style)
-(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+;(require 'google-c-style)
+;(add-hook 'c-mode-common-hook 'google-set-c-style)
+;(add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
 ;; add useful behaviour to c-mode
 (add-hook 'c-mode-common-hook
@@ -197,10 +200,17 @@
 (load "~/.emacs.d/custom/fireplace/fireplace")
 
 ;; Windowing keys
-(global-set-key [(C-M-left)] 'windmove-left)
-(global-set-key [(C-M-right)] 'windmove-right)
-(global-set-key [(C-M-up)] 'windmove-up)
-(global-set-key [(C-M-down)] 'windmove-down)
+;; (global-set-key [(C-M-left)] 'windmove-left)
+;; (global-set-key [(C-M-right)] 'windmove-right)
+;; (global-set-key [(C-M-up)] 'windmove-up)
+;; (global-set-key [(C-M-down)] 'windmove-down)
+
+(global-set-key (kbd "\C-q") nil)
+(global-set-key (kbd "\C-qa") 'windmove-left)
+(global-set-key (kbd "\C-qd") 'windmove-right)
+(global-set-key (kbd "\C-qw") 'windmove-up)
+(global-set-key (kbd "\C-qs") 'windmove-down)
+
 
 ;(global-set-key [(C-M-left)] 'shrink-window-horizontally)
 ;(global-set-key [(C-M-right)] 'enlarge-window-horizontally)
@@ -234,3 +244,52 @@
 
 (set-keyboard-coding-system nil)
 (setq x-alt-keysym 'meta)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(compile-command "cmake -DCMAKE_BUILD_TYPE=Debug ..; make -j "))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(defun show-file-name ()
+  "Show the full path file name in the minibuffer."
+  (interactive)
+  (message (buffer-file-name)))
+
+(global-set-key (kbd "\C-f") nil)
+(global-set-key (kbd "\C-f1") 'show-file-name)
+
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
+(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "<f6>") 'ivy-resume)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "<f1> f") 'counsel-describe-function)
+(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f1> l") 'counsel-find-library)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c k") 'counsel-ag)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+(define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+
+;(use-package ggtags
+;:ensure t
+;:config
+(add-hook 'c-mode-common-hook
+	  (lambda ()
+	    (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+	      (ggtags-mode 1))))
+;)
