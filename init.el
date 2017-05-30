@@ -100,7 +100,6 @@
 (require 'yasnippet)
 (yas-global-mode 1)
 
-
 ; Fix iedit bug
 ; modify several instances of a variable name simultaneously
 (define-key global-map (kbd "C-c ;") 'iedit-mode)
@@ -117,6 +116,7 @@
 ;(global-set-key (kbd "C-M-z") 'clang-format-buffer)
 ;(global-set-key (kbd "C-M-z") 'clang-format-region)
 (global-set-key [C-tab] 'clang-format-region)
+
 
 ;; add useful behaviour to c-mode
 (add-hook 'c-mode-common-hook
@@ -216,7 +216,6 @@
 
 (global-set-key (kbd "\C-f") nil)
 (global-set-key (kbd "\C-f1") 'show-file-name)
-
 
  (ivy-mode 1)
 ;; (setq ivy-use-virtual-buffers t)
