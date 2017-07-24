@@ -25,3 +25,12 @@ alias fn="find . -name"
 # set git editor to emacs
 export EDITOR="emacs -nw"
 export LIBCLANG_ROOT_DIR="/usr/lib/llvm-3.8"
+
+export MAPPING_ROOT=$HOME/data/marble-map-root/
+
+source /opt/ros/kinetic/setup.bash
+
+source ~/src/mBot/ros/devel/setup.bash
+
+export ROBOT_NAME=happy2
+export MDASH_API_KEY=""
