@@ -24,4 +24,4 @@ alias fn="find . -name"
 
 # set git editor to emacs
 export EDITOR="emacs -nw"
-export LIBCLANG_ROOT_DIR="/usr/local/opt/llvm"
+export LIBCLANG_ROOT_DIR="/usr/lib/llvm-3.8"

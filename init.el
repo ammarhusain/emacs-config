@@ -156,11 +156,11 @@
 (load "~/.emacs.d/custom/fireplace/fireplace")
 
 ;; Windowing keys
-(global-set-key (kbd "\C-q") nil)
-(global-set-key (kbd "\C-qa") 'windmove-left)
-(global-set-key (kbd "\C-qd") 'windmove-right)
-(global-set-key (kbd "\C-qw") 'windmove-up)
-(global-set-key (kbd "\C-qs") 'windmove-down)
+;(global-set-key (kbd "\C-q") nil)
+(global-set-key (kbd "<M-left>") 'windmove-left)
+(global-set-key (kbd "<M-right>") 'windmove-right)
+(global-set-key (kbd "<M-up>") 'windmove-up)
+(global-set-key (kbd "<M-down>") 'windmove-down)
 
 (global-set-key [(C-M-left)] 'shrink-window-horizontally)
 (global-set-key [(C-M-right)] 'enlarge-window-horizontally)
@@ -198,7 +198,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(compile-command "cmake -DCMAKE_BUILD_TYPE=Debug ..; make -j ")
- '(flymake-google-cpplint-command "~/src/autonomy-repo/autonomy/cmake/lint/google_cpplint.py")
+ '(cmake-ide-build-dir "~/src/mBot/ros/build")
+ ;'(flymake-google-cpplint-command "~/src/autonomy-repo/autonomy/cmake/lint/google_cpplint.py")
  '(package-selected-packages
    (quote
     (flycheck-rtags flycheck-package flycheck-irony company-irony-c-headers company-irony irony cmake-ide rtags yasnippet ivy iedit google-c-style ggtags flymake-google-cpplint flymake-cursor auto-complete-c-headers))))

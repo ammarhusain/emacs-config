@@ -6,3 +6,5 @@
 
 - Install rtags ... was a pain in the butt. Got it to work by setting the LIBCLANG_ROOT_SIR environment variable
 - Install Irony mode and irony-mode-server ... Got it to work by adding -DCMAKE_PREFIX_PATH=/usr/local/opt/llvm
+
+Works with emacs25.2
