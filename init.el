@@ -18,20 +18,6 @@
 ;;----------------------------------------------------------------------
 ;; Doxygen autogen functions
 ;;-------------------------------------------------------------------------
-(defun dg-insert-class-comment ()
-  "Adds a comment block for a class"
-  (interactive)
-  (insert "/// \\class  \n"
-         ; "/// \\author " name " <" email_address ">\n"
-          "///\n"
-	  "/// \\brief  \n"
-	  "/// \\details \n"
-          "///\n"
-          "///\n")
-   (search-backward "brief")
-   (end-of-line)
-)
-
 (defun dg-insert-file-comment ()
   "Adds a comment block for a file"
   (interactive)
@@ -40,33 +26,29 @@
   )
 
 ;; insert a comment
-(defun dg-insert-comment ()
-  (interactive)
-  (insert "// ")
-  )
-
-;; insert a comment
-(defun dg-insert-doxygen-comment ()
-  (interactive)
-  (insert "/// ")
-  )
-
-;; insert a comment
 (defun dg-insert-hack-comment ()
   (interactive)
-  (insert "/// \\hack ):    ")
+  (insert "/// \\hack(ammar):  ")
   )
 
 ;; insert a comment
 (defun dg-insert-todo-comment ()
   (interactive)
-  (insert "/// \\todo (ammar_husain): ")
+  (insert "/// \\todo(ammar): ")
   )
 
 ;; treat .h files as C++
 (setq auto-mode-alist (cons '("\\.h$" . c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.c$" . c++-mode) auto-mode-alist))
 
+;; add useful behaviour to c-mode
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (define-key c-mode-base-map "\C-z\C-f" 'dg-insert-file-comment)
+	    (define-key c-mode-base-map "\C-z\C-h" 'dg-insert-hack-comment)
+	    (define-key c-mode-base-map "\C-z\C-t" 'dg-insert-todo-comment)
+	    )
+	  )
 
 ;;--------------------------------------------------------------------------
 ;; dirtree (equivalent of NERDTree in Vim)
@@ -96,10 +78,6 @@
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize) ;; You might already have this line
 
-;; start yasnippet with emacs
-(require 'yasnippet)
-(yas-global-mode 1)
-
 ; Fix iedit bug
 ; modify several instances of a variable name simultaneously
 (define-key global-map (kbd "C-c ;") 'iedit-mode)
@@ -111,24 +89,8 @@
 
 ; Clang formatting
 (require 'clang-format)
-;(setq clang-format-executable '"/usr/local/bin/clang-format")
-;(setq clang-format-executable '"/usr/lib/llvm-3.5/bin/clang-format -style='Google'")
-;(global-set-key (kbd "C-M-z") 'clang-format-buffer)
-;(global-set-key (kbd "C-M-z") 'clang-format-region)
 (global-set-key [C-tab] 'clang-format-region)
 
-
-;; add useful behaviour to c-mode
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (define-key c-mode-base-map "\C-z\C-l" 'dg-insert-class-comment)
-            (define-key c-mode-base-map "\C-z\C-f" 'dg-insert-file-comment)
-            (define-key c-mode-base-map "\C-z\C-c" 'dg-insert-comment)
-	    (define-key c-mode-base-map "\C-z\C-d" 'dg-insert-doxygen-comment)
-	    (define-key c-mode-base-map "\C-z\C-h" 'dg-insert-hack-comment)
-	    (define-key c-mode-base-map "\C-z\C-t" 'dg-insert-todo-comment)
-	    )
-	  )
 
 ;;----------------------------------------------------------------------
 ;; CMake
@@ -156,7 +118,6 @@
 (load "~/.emacs.d/custom/fireplace/fireplace")
 
 ;; Windowing keys
-;(global-set-key (kbd "\C-q") nil)
 (global-set-key (kbd "<M-left>") 'windmove-left)
 (global-set-key (kbd "<M-right>") 'windmove-right)
 (global-set-key (kbd "<M-up>") 'windmove-up)
@@ -199,10 +160,9 @@
  ;; If there is more than one, they won't work right.
  '(compile-command "cmake -DCMAKE_BUILD_TYPE=Debug ..; make -j ")
  '(cmake-ide-build-dir "~/src/mBot/ros/build")
- ;'(flymake-google-cpplint-command "~/src/autonomy-repo/autonomy/cmake/lint/google_cpplint.py")
  '(package-selected-packages
    (quote
-    (flycheck-rtags flycheck-package flycheck-irony company-irony-c-headers company-irony irony cmake-ide rtags yasnippet ivy iedit google-c-style ggtags flymake-google-cpplint flymake-cursor auto-complete-c-headers))))
+    (flycheck-rtags flycheck-package flycheck-irony company-irony-c-headers company-irony irony cmake-ide rtags ivy iedit google-c-style ggtags flymake-google-cpplint flymake-cursor auto-complete-c-headers))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
