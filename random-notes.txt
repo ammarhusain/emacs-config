@@ -8,3 +8,11 @@
 - Install Irony mode and irony-mode-server ... Got it to work by adding -DCMAKE_PREFIX_PATH=/usr/local/opt/llvm
 
 Works with emacs25.2
+
+
+;; Startup from clean system
+sudo apt-get install clang cmake irony-server clang-format libclang-dev
+
+; to try
+sudo apt-get install clang cmake clang-format libclang-dev
+M-x irony-install-server
