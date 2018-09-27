@@ -8,21 +8,22 @@ if [ -f ~/.git-completion.bash ]; then
     . ~/.git-completion.bash
 fi
 
-
-# set your aliases
+# Set aliases
 alias e="emacs"
 alias e2="emacs -nw"
 alias end="emacs --no-desktop"
-alias ga="git add"
+alias ga="git add "
 alias gc="git commit"
 alias gs="git status"
-alias gcm="git commit -m"
-alias gcmb="git commit -m \"blah\""
+alias gcm="git commit -m ''"
+alias gcmb="git commit -m 'blah'"
 alias gri="git rebase -i"
 alias gir="grep -ir"
-alias fn="find . -name"
+alias fn="find . -name \"\""
+alias emacs_clean="find . -name '*~' | xargs rm -f"
+alias emacs_clean_all="find . -name '*~' -o '*#*' | xargs rm -f"
 
-# set git editor to emacs
+# Set git editor to emacs
 export EDITOR="emacs -nw"
 
 # Marble specific config

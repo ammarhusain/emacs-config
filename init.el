@@ -1,10 +1,12 @@
-1;; MELPA
+;; MELPA
 ;; Try use-package to initialize packages at first startup
 (package-initialize)
 (require 'package)
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
-(setq package-check-signature nil)
+
+;; Uncomment if you get elpa signature failed errors
+;(setq package-check-signature nil)
 (package-refresh-contents)
 
 (dolist (pkg '(use-package))
