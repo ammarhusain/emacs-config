@@ -4,7 +4,8 @@
 (require 'package)
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
-;(package-refresh-contents)
+(setq package-check-signature nil)
+(package-refresh-contents)
 
 (dolist (pkg '(use-package))
   (unless (package-installed-p pkg)
