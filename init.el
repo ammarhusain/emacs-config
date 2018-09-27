@@ -6,8 +6,9 @@
 	     '("melpa" . "https://melpa.org/packages/") t)
 
 ;; Uncomment if you get elpa signature failed errors
-;(setq package-check-signature nil)
-(package-refresh-contents)
+;;(setq package-check-signature nil)
+;; Uncomment for initial setup
+;;(package-refresh-contents)
 
 (dolist (pkg '(use-package))
   (unless (package-installed-p pkg)
@@ -18,7 +19,7 @@
 ;; set the theme to tango dark
 (load-theme 'tango-dark)
 
-					; Add the custom directory to pick the custom emacs package configurations
+;; Add the custom directory to pick the custom emacs package configurations
 (add-to-list 'load-path "~/.emacs.d/custom")
 
 ;;----------------------------------------------------------------------
