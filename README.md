@@ -1,5 +1,5 @@
 ### Setup:
-`sudo apt-get install emacs25 clang cmake clang-format libclang-dev`
+`sudo apt-get install emacs25 clang libclang-dev cmake clang-format`
 
 Then start:
 
@@ -24,6 +24,10 @@ Then start:
 * Need compilation database for irony mode & flycheck to work well.
   `cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..`
 * No jump to definition: instead use `Ctrl-C Ctrl-G` to grep within git repo
+* After the initial setup, you can comment out the following line, to save time & avoid an elpa package refresh on startup:
+
+`(package-refresh-contents)`
+
 * For Terminal setting on Mac:
 
       Preferences->Profiles->Keyboard
