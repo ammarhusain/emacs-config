@@ -1,5 +1,13 @@
 ### Setup:
+On Ubuntu
+
 `sudo apt-get install emacs25 clang libclang-dev cmake clang-format`
+
+On Mac OSX
+
+`brew install emacs llvm cmake clang-format`
+
+
 
 Then start:
 
