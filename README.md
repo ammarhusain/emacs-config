@@ -41,3 +41,11 @@ Then start:
       Preferences->Profiles->Keyboard
 
       Enable the "Use Option as Meta key"
+
+* If you get this error:
+
+     Company back-end 'company-clang' could not be initialized:
+
+     Company found no clang executable
+
+Symlink the clang versioned executable: `sudo ln -s /usr/bin/clang-3.8 /usr/bin/clang`
