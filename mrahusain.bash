@@ -29,5 +29,5 @@ export EDITOR="emacs -nw"
 # Marble specific config
 export MAPPING_ROOT=$HOME/data/marble-map-root/
 source /opt/ros/kinetic/setup.bash
-source ~/src/mBot/ros/devel/setup.bash
+source ~/src/mbot/ros/devel/setup.bash
 export MDASH_API_KEY=""
