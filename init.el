@@ -89,7 +89,10 @@
 (use-package iedit
   :ensure t
   :config
-  (define-key global-map (kbd "C-c ;") 'iedit-mode)
+  (define-key iedit-mode-occurrence-keymap (kbd "C-i f") 'iedit-restrict-function)
+  (define-key iedit-mode-occurrence-keymap (kbd "C-i s") 'iedit-goto-first-occurrence)
+  (define-key iedit-mode-occurrence-keymap (kbd "C-i e") 'iedit-goto-last-occurrence)
+  (define-key iedit-mode-occurrence-keymap (kbd "C-i n") 'iedit-number-occurrences)
   )
 
 ;;----------------------------------------------------------------------
@@ -244,10 +247,11 @@
   (add-hook 'c-mode-hook 'flycheck-mode)
   )
 
-(use-package irony-eldoc
-  :ensure t
-  :config
-  (add-hook 'irony-mode-hook 'irony-eldoc))
+;; Disabled because it interefers with iedit buffers
+;; (use-package irony-eldoc
+;;   :ensure t
+;;   :config
+;;   (add-hook 'irony-mode-hook 'irony-eldoc))
 
 (defun counsel-irony-mode-hook ()
   (define-key irony-mode-map
