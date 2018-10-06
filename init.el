@@ -261,6 +261,44 @@
 (add-hook 'irony-mode-hook 'counsel-irony-mode-hook)
 
 ;;----------------------------------------------------------------------
+;; GUD (GDB) Debugging
+;;----------------------------------------------------------------------
+;;Make up/down behave as in terminal
+(add-hook 'gud-mode-hook
+          '(lambda ()
+             (local-set-key [home] ; move to beginning of line, after prompt
+                            'comint-bol)
+             (local-set-key [up] ; cycle backward through command history
+                            '(lambda () (interactive)
+                               (if (comint-after-pmark-p)
+                                   (comint-previous-input 1)
+                                 (previous-line 1))))
+             (local-set-key [down] ; cycle forward through command history
+                            '(lambda () (interactive)
+                               (if (comint-after-pmark-p)
+                                   (comint-next-input 1)
+                                 (forward-line 1))))
+             )
+	  ;; By default set it to the multi window arrangement
+          (setq gdb-many-windows t))
+
+;; Remap keybindings to Ctrl-Q for easy usability
+(global-set-key (kbd "C-q") nil)
+(global-set-key (kbd "C-q C-s") 'gud-step)
+(global-set-key (kbd "C-q C-b") 'gud-break)
+(global-set-key (kbd "C-q C-d") 'gud-remove)
+(global-set-key (kbd "C-q C-n") 'gud-next)
+(global-set-key (kbd "C-q C-p") 'gud-print)
+(global-set-key (kbd "C-q C-j") 'gud-jump)
+(global-set-key (kbd "C-q C-c") 'gud-cont)
+(global-set-key (kbd "C-q C-u") 'gud-until)
+(global-set-key (kbd "C-q C-w") 'gud-watch)
+(global-set-key (kbd "C-q <") 'gud-up)
+(global-set-key (kbd "C-q >") 'gud-down)
+(global-set-key (kbd "C-q C-g") 'gdb)
+
+
+;;----------------------------------------------------------------------
 ;; END OF HUMAN FILE
 ;;----------------------------------------------------------------------
 
