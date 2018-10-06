@@ -1,10 +1,13 @@
 #pragma once
+#include <vector>
 
 class MyBase {
-public:
+ public:
   MyBase();
   void MustDefine();
   // MustDefine_arg has some docs here.
   double MustDefine_arg(int a);
-private:
+
+ private:
+  std::vector<char> letters_;
 };
