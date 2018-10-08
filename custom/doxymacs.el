@@ -1129,18 +1129,37 @@ the completion or nil if canceled by the user."
 	(list 'l " <" user-mail-address ">"))))
 
 (defconst doxymacs-JavaDoc-file-comment-template
- '("/*!" > n
-   " * Copyright 2015 <Apple Inc.> " > n
+ '("/**" > n
+   ;; " * Copyright 2015 <Apple Inc.> " > n
+   ;; " * " > n
+   " * Copyright (c) "(format-time-string "%Y")" <"author-name">" > n
+   " * Permission is hereby granted, free of charge, to any person obtaining a copy" > n
+   " * of this software and associated documentation files (the \"Software\"), to deal" > n
+   " * in the Software without restriction, including without limitation the rights" > n
+   " * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell" > n
+   " * copies of the Software, and to permit persons to whom the Software is" > n
+   " * furnished to do so, subject to the following conditions:" > n
+
+   " * The above copyright notice and this permission notice shall be included in all" > n
+   " * copies or substantial portions of the Software." > n
+
+   " * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR" > n
+   " * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY," > n
+   " * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE" > n
+   " * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER" > n
+   " * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM," > n
+   " * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE" > n
+   " * SOFTWARE." > n
    " * " > n
    " * " (doxymacs-doxygen-command-char) "file   "
    (if (buffer-file-name)
        (file-name-nondirectory (buffer-file-name))
      "") > n
-   " * " (doxymacs-doxygen-command-char) "author " author-name
-   email-address
-   > n
-   " * " (doxymacs-doxygen-command-char) "date   " (current-time-string) > n
-   " * " > n
+   ;; " * " (doxymacs-doxygen-command-char) "author " author-name
+   ;; email-address
+   ;; > n
+   ;; " * " (doxymacs-doxygen-command-char) "date   " (current-time-string) > n
+   ;; " * " > n
    " * " (doxymacs-doxygen-command-char) "brief  " (p "Brief description of this file: ") > n
    " * " > n
    " * " p > n
@@ -1210,10 +1229,9 @@ the completion or nil if canceled by the user."
      (if next-func
 	 (list
 	  'l
-	  "/*!" '> 'n
+	  "/**" '> 'n
 	  " * \@brief " 'p '> 'n
 	  " * " '> 'n
-          " * \@date  " (format-time-string "%m/%d/%Y") " " '> 'n
 	  (doxymacs-parm-tempo-element (cdr (assoc 'args next-func)))
 	  (unless (string-match
                    (regexp-quote (cdr (assoc 'return next-func)))
