@@ -82,6 +82,7 @@
       (doxymacs-font-lock)))
 
 (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
+(setq doxymacs-doxygen-style "JavaDoc")
 
 ;;----------------------------------------------------------------------
 ;; Iedit: modify several instances of a variable name simultaneously
