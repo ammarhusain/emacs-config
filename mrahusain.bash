@@ -10,14 +10,15 @@ fi
 
 # Set aliases
 alias e="emacs"
-alias e2="emacs -nw"
+alias enw="emacs -nw"
 alias end="emacs --no-desktop"
 alias ga="git add "
 alias gc="git commit"
 alias gp="git push"
 alias gs="git status"
 alias gd="git diff"
-alias gcmb="git commit -m 'blah'"
+alias gl="git log"
+alias gcm="git commit -m "
 alias gri="git rebase -i"
 alias gir="grep -ir"
 alias fn="find . -name \"\""
