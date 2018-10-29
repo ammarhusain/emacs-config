@@ -41,15 +41,15 @@
   )
 
 ;; insert a comment
-(defun dg-insert-hack-comment ()
+(defun dg-insert-comment ()
   (interactive)
-  (insert "/// \\hack(ammar):  ")
+  (insert "//!! ")
   )
 
 ;; insert a comment
 (defun dg-insert-todo-comment ()
   (interactive)
-  (insert "/// \\todo(ammar): ")
+  (insert "//!! \\todo(ammar): ")
   )
 
 ;; treat .h files as C++
@@ -60,7 +60,7 @@
 (add-hook 'c-mode-common-hook
           (lambda ()
             (define-key c-mode-base-map "\C-z\C-f" 'dg-insert-file-comment)
-	    (define-key c-mode-base-map "\C-z\C-h" 'dg-insert-hack-comment)
+	    (define-key c-mode-base-map "\C-z\C-g" 'dg-insert-comment)
 	    (define-key c-mode-base-map "\C-z\C-t" 'dg-insert-todo-comment)
 	    )
 	  )
