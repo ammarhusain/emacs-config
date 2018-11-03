@@ -45,19 +45,21 @@ avoid an elpa package refresh on startup:
 
 * If you get this error:
 
-     Company back-end 'company-clang' could not be initialized:
+     `Company back-end 'company-clang' could not be initialized: Company found no clang executable`
 
-     Company found no clang executable
-
-Symlink the clang versioned executable: `sudo ln -s /usr/bin/clang-3.8 /usr/bin/clang`
+     Symlink the clang versioned executable: `sudo ln -s /usr/bin/clang-3.8 /usr/bin/clang`
 
 * Clang does not play well with GDB. More specifically it does not emit debug information for `libstdc++`.
-This causes errors because GDB is unable to parse through STL datastructures like string, vector etc. Example error:
 
-` Python Exception <class 'gdb.error'> There is no member named _M_dataplus.: `
+     This causes errors because GDB is unable to parse through STL datastructures like string, vector etc. Example error:
 
-There are 2 ways to solve this:
-(a) Install the debug package for `libstdc++`: `sudo apt-get install libstdc++6-5-dbg`
-(b) [Force Clang to emit debug symbols]
-(https://stackoverflow.com/questions/41745527/cannot-view-stdstring-when-compiled-with-clang)
-by setting the `-D_GLIBCXX_DEBUG` flag.
+     `Python Exception <class 'gdb.error'> There is no member named _M_dataplus.: `
+
+     There are 2 ways to solve this:
+
+     (i)  Install the debug package for `libstdc++`: `sudo apt-get install libstdc++6-5-dbg`
+
+     (ii) [Force Clang to emit debug symbols](https://stackoverflow.com/questions/41745527/cannot-view-stdstring-when-compiled-with-clang) by setting the `-D_GLIBCXX_DEBUG` flag.
+
+* MacOS Xcode issues: After upgrading MacOS versions, often xcode needs to be reinstalled or the software license needs to be signed again. This causes several developer tools such as `git` tp give errors when trying to use on the terminal. In order to install Xcode run `xcode-select --install` or install it from the AppStore.
+    
