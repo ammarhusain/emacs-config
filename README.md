@@ -29,13 +29,12 @@ Then start:
 
 
 ### Notes:
-* Need compilation database for irony mode & flycheck to work well.
+* Emacs Notes
+  1. Need compilation database for irony mode & flycheck to work well.
   `cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..`
-* No jump to definition: instead use `Ctrl-C Ctrl-G` to grep within git repo
-* After the initial setup, you can comment out the following line, to save time &
-avoid an elpa package refresh on startup:
-
-`(package-refresh-contents)`
+  1. No jump to definition: instead use `Ctrl-C Ctrl-G` to grep within git repo
+  1. After the initial setup, you can comment out the following line, to save time &
+avoid an elpa package refresh on startup: `(package-refresh-contents)`
 
 * For Terminal setting on Mac:
 
@@ -57,9 +56,17 @@ avoid an elpa package refresh on startup:
 
      There are 2 ways to solve this:
 
-     (i)  Install the debug package for `libstdc++`: `sudo apt-get install libstdc++6-5-dbg`
+     1. Install the debug package for `libstdc++`: `sudo apt-get install libstdc++6-5-dbg`
 
-     (ii) [Force Clang to emit debug symbols](https://stackoverflow.com/questions/41745527/cannot-view-stdstring-when-compiled-with-clang) by setting the `-D_GLIBCXX_DEBUG` flag.
+     1. [Force Clang to emit debug symbols](https://stackoverflow.com/questions/41745527/cannot-view-stdstring-when-compiled-with-clang) by setting the `-D_GLIBCXX_DEBUG` flag.
 
 * MacOS Xcode issues: After upgrading MacOS versions, often xcode needs to be reinstalled or the software license needs to be signed again. This causes several developer tools such as `git` tp give errors when trying to use on the terminal. In order to install Xcode run `xcode-select --install` or install it from the AppStore.
+
+* VirtualBox Ubuntu setup:
+
+  1. Runs extremely slow out of the box. Need to enable 3D graphics rendering so the UI is handled on the GPU.
+      `Settings -> Display -> Enable 3D Acceleration`
+      
+  1. For Folder Sharing & Clipboard Sharing to work, install VBox Guest Additions. The shared folders get mounted by default under `/media/sf_<folder_name>`.
+      
     
